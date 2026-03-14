@@ -1,1 +1,710 @@
-test
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Arthur Tacheau</title>
+  <link rel="icon" type="image/png" href="IMG/favicon.png">
+  <style>
+    :root {
+      --bg: #111111;
+      --panel: #171717;
+      --panel-2: #1f1f1f;
+      --text: #f5f1e8;
+      --muted: #b7afa3;
+      --line: rgba(245, 241, 232, 0.12);
+      --accent: #f5f1e8;
+      --shadow: 0 20px 50px rgba(0,0,0,.35);
+      --radius: 22px;
+      --max: 1320px;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: Inter, Arial, Helvetica, sans-serif;
+      background:
+        radial-gradient(circle at top left, rgba(255,255,255,.06), transparent 30%),
+        radial-gradient(circle at bottom right, rgba(255,255,255,.03), transparent 25%),
+        var(--bg);
+      color: var(--text);
+      line-height: 1.5;
+    }
+
+    a { color: inherit; text-decoration: none; }
+    img { max-width: 100%; display: block; }
+
+    .layout {
+      display: grid;
+      grid-template-columns: 260px 1fr;
+      min-height: 100vh;
+    }
+
+    .sidebar {
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      padding: 32px 26px;
+      border-right: 1px solid var(--line);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 24px;
+      background: rgba(12,12,12,.75);
+      backdrop-filter: blur(14px);
+    }
+
+    .brand {
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+
+    .brand-mark {
+      width: 128px;
+      height: 128px;
+      border: 1px solid var(--line);
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      font-weight: 600;
+      letter-spacing: .18em;
+      font-size: 0px;
+      color: var(--muted);
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-image: url("IMG/MOI.png");
+    }
+
+    .brand h1 {
+      margin: 0;
+      font-size: 24px;
+      line-height: 1;
+      font-weight: 500;
+      letter-spacing: -.04em;
+    }
+
+    .nav {
+      display: grid;
+      gap: 10px;
+      margin-top: 14px;
+    }
+
+    .nav a {
+      width: fit-content;
+      font-size: 14px;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      color: var(--muted);
+      transition: .2s ease;
+      position: relative;
+    }
+
+    .nav a::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: -4px;
+      width: 0;
+      height: 1px;
+      background: var(--accent);
+      transition: width .25s ease;
+    }
+
+    .nav a:hover,
+    .nav a.active { color: var(--text); }
+    .nav a:hover::after,
+    .nav a.active::after { width: 100%; }
+
+    .sidebar-footer {
+      display: grid;
+      gap: 10px;
+      font-size: 12px;
+      color: var(--muted);
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+
+    main {
+      width: min(calc(100% - 48px), var(--max));
+      margin: 0 auto;
+      padding: 34px 0 80px;
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: 1.15fr .85fr;
+      gap: 24px;
+      align-items: stretch;
+      margin-bottom: 30px;
+    }
+
+    .hero-card,
+    .hero-visual,
+    .section-card {
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.01));
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .hero-card {
+      padding: 42px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      min-height: 480px;
+      
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      width: fit-content;
+      padding: 8px 12px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: .16em;
+      font-size: 11px;
+    }
+
+    .hero-card h2 {
+      margin: 20px 0 14px;
+      font-size: clamp(42px, 6vw, 90px);
+      line-height: .92;
+      letter-spacing: -.06em;
+      text-transform: uppercase;
+    }
+
+    .hero-card p {
+      margin: 0;
+      max-width: 720px;
+      color: var(--muted);
+      font-size: 16px;
+    }
+
+    .hero-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 28px;
+    }
+
+    .pill {
+      padding: 10px 14px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      font-size: 13px;
+      color: var(--text);
+      background: rgba(255,255,255,.02);
+    }
+
+    .hero-visual {
+      min-height: 480px;
+      position: relative;
+      background:
+        linear-gradient(135deg, rgba(255,255,255,.07), transparent 40%),
+        radial-gradient(circle at 20% 30%, rgba(255,255,255,.16), transparent 20%),
+        radial-gradient(circle at 80% 70%, rgba(255,255,255,.12), transparent 22%);
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-image: url("IMG/RED.png");
+    }
+
+    /*.hero-visual::before,
+    .hero-visual::after {
+      content: "";
+      position: absolute;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,.16);
+    }
+
+    .hero-visual::before {
+      width: 55%;
+      height: 55%;
+      top: 14%;
+      left: 12%;
+    }
+
+    .hero-visual::after {
+      width: 38%;
+      height: 38%;
+      right: 10%;
+      bottom: 14%;
+    }*/
+
+    .hero-visual .overlay-text {
+      position: absolute;
+      left: 28px;
+      bottom: 28px;
+      font-size: clamp(28px, 4vw, 56px);
+      letter-spacing: -.05em;
+      line-height: .95;
+      text-transform: uppercase;
+      max-width: 280px;
+      text-shadow: 0 0px 25px rgba(0,0,0,1);
+    }
+
+    .intro-grid,
+    .gallery-grid,
+    .projects-grid {
+      display: grid;
+      gap: 24px;
+      margin-top: 24px;
+    }
+
+    .intro-grid {
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .section-card {
+      padding: 28px;
+    }
+
+    .section-title {
+      margin: 0 0 10px;
+      font-size: 13px;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .section-card h3 {
+      margin: 0 0 10px;
+      font-size: 28px;
+      letter-spacing: -.04em;
+    }
+
+    .section-card p {
+      margin: 0;
+      color: var(--muted);
+    }
+
+    .gallery-header,
+    .projects-header {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 18px;
+      margin-top: 56px;
+      margin-bottom: 16px;
+    }
+
+    .gallery-header h3,
+    .projects-header h3 {
+      margin: 0;
+      font-size: clamp(28px, 3vw, 44px);
+      letter-spacing: -.05em;
+      text-transform: uppercase;
+    }
+
+    .gallery-grid {
+      grid-template-columns: repeat(12, 1fr);
+      grid-auto-rows: 120px;
+    }
+
+    .shot {
+    border-radius: 20px;
+    border: 1px solid var(--line);
+    overflow: hidden;
+    position: relative;
+    box-shadow: var(--shadow);
+    background-color: #111;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    display: block;
+    cursor: pointer;
+    transition: transform .2s ease, border-color .2s ease;
+    }
+
+    .shot:hover {
+    transform: translateY(-4px);
+    border-color: rgba(245,241,232,.28);
+    }
+
+    .shot::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(to top, rgba(0,0,0,.60), rgba(0,0,0,.18), transparent 25%),
+        radial-gradient(circle at 30% 30%, rgba(255,255,255,.16), transparent 24%),
+        radial-gradient(circle at 70% 65%, rgba(255,255,255,.12), transparent 22%);
+      mix-blend-mode: normal;
+    }
+
+    .shot span {
+    position: absolute;
+    left: 18px;
+    bottom: 16px;
+    font-size: 16px;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    color: #fff;
+    
+    padding: 3px 6px;
+    border-radius: 3px;
+    backdrop-filter: blur(3px);
+    background: rgba(30,30,30,0.30);
+    border: 1px solid rgba(255,255,255,0.25);
+    }
+
+    .s1 { 
+    grid-column: span 7;
+    grid-row: span 2;
+    background-image: url("IMG/10X.png");
+    }
+
+    .s2 { 
+    grid-column: span 5;
+    grid-row: span 2;
+    background-image: url("IMG/INDOCHINE.png");
+    }
+
+    .s3 { 
+    grid-column: span 4;
+    grid-row: span 2;
+    background-image: url("IMG/OUTRE-MER.png");
+    }
+
+    .s4 { 
+    grid-column: span 4;
+    grid-row: span 2;
+    background-image: url("IMG/WILLY-CHAVARIA.png");
+    }
+
+    .s5 { 
+    grid-column: span 4;
+    grid-row: span 2;
+    background-image: url("IMG/DAVID-TAO.png");
+    }
+
+    .projects-grid {
+      grid-template-columns: repeat(5, 1fr);
+    }
+
+    .project-card {
+      padding: 22px;
+      min-height: 220px;
+      border-radius: 20px;
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 18px;
+      transition: transform .2s ease, border-color .2s ease;
+      position: relative;
+      overflow: hidden;
+      isolation: isolate;
+    }
+
+    .project-bg {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: -2;
+    }
+
+    .project-card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(0,0,0,.82), rgba(0,0,0,.45), rgba(0,0,0,.18));
+      z-index: -1;
+    }
+
+    .project-card > *:not(.project-bg) {
+      position: relative;
+      z-index: 1;
+    }
+
+    .project-card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(245,241,232,.28);
+    }
+
+    .project-index {
+      font-size: 12px;
+      color: var(--muted);
+      letter-spacing: .18em;
+      text-transform: uppercase;
+    }
+
+    .project-card h4 {
+      margin: 0;
+      font-size: 26px;
+      letter-spacing: -.04em;
+      line-height: 1.05;
+    }
+
+    .project-card p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .cta {
+      margin-top: 56px;
+      padding: 28px;
+      border-radius: var(--radius);
+      border: 1px solid var(--line);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      background: linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.01));
+      box-shadow: var(--shadow);
+    }
+
+    .cta strong {
+      display: block;
+      font-size: 24px;
+      letter-spacing: -.04em;
+      margin-bottom: 4px;
+    }
+
+    .cta span { color: var(--muted); }
+
+    .button {
+      padding: 14px 20px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      text-transform: uppercase;
+      letter-spacing: .16em;
+      font-size: 12px;
+      background: var(--text);
+      color: #111;
+      white-space: nowrap;
+    }
+
+    .back-top {
+      display: inline-flex;
+      margin-top: 26px;
+      color: var(--muted);
+      font-size: 13px;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+    }
+
+    @media (max-width: 1100px) {
+      .layout { grid-template-columns: 1fr; }
+      .sidebar {
+        position: relative;
+        height: auto;
+        border-right: none;
+        border-bottom: 1px solid var(--line);
+      }
+      main { width: min(calc(100% - 36px), var(--max)); }
+      .hero, .intro-grid, .projects-grid { grid-template-columns: 1fr; }
+      .gallery-grid { grid-template-columns: repeat(2, 1fr); grid-auto-rows: 180px; }
+      .gallery-grid > * { grid-column: span 1 !important; grid-row: span 1 !important; }
+    }
+
+    @media (max-width: 700px) {
+      main { width: min(calc(100% - 24px), var(--max)); padding-top: 22px; }
+      .hero-card, .hero-visual { min-height: 360px; }
+      .hero-card { padding: 26px; }
+      .section-card, .project-card, .cta { padding: 22px; }
+      .gallery-grid { grid-template-columns: 1fr; grid-auto-rows: 220px; }
+      .cta { flex-direction: column; align-items: flex-start; }
+    }
+  </style>
+</head>
+<body>
+  <div class="layout" id="top">
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="brand-mark">AT</div>
+        <div>
+          <h1>Arthur Tacheau</h1>
+          <nav class="nav" aria-label="Navigation principale">
+            <a href="#Presentation" class="active">Présentation</a>
+            <a href="#Recents">Projets récents</a>
+            <a href="Projets.html">Tous les projets</a>
+            <a href="#Clients">Clients</a>
+          </nav>
+        </div>
+      </div>
+
+      <div class="sidebar-footer">
+        <a href="https://www.linkedin.com/in/arthurtacheau" target="_blank">Linkedin</a>
+        <a href="https://www.instagram.com/arthurtacheau" target="_blank">Instagram</a>
+      </div>
+    </aside>
+
+    <main>
+      <section class="hero" id="Presentation">
+        <article class="hero-card">
+          <div>
+            <span class="eyebrow">Portfolio</span>
+            <h2>Arthur</h2>
+            <p>
+              Technicien audiovisuel spécialisé en captation, production et diffusion.
+              J’interviens sur des projets TV, cinéma et événements live, de la préparation technique jusqu’à la mise en image sur le terrain.
+
+            </p>
+            <div class="hero-meta">
+              <span class="pill">Cadre</span>
+              <span class="pill">Production</span>
+              <span class="pill">Post-Production</span>
+            </div>
+          </div>
+
+          <div>
+            <p>
+              Ce portfolio présente une sélection de productions audiovisuelles, événements live et projets techniques auxquels j’ai participé, en collaboration avec des chaînes, productions et institutions.
+            </p>
+          </div>
+        </article>
+
+        <div class="hero-visual" aria-hidden="true">
+          <div class="overlay-text">Production<br>Audiovisuelle</div>
+        </div>
+      </section>
+
+      <!--<section class="intro-grid" id="Recents">
+        <article class="section-card">
+          <div class="section-title">À propos</div>
+          <h3>Une présence sobre, premium et visuelle</h3>
+          <p>
+            Cette version mise sur de grands titres, beaucoup d’espace, des blocs éditoriaux et une galerie stylisée
+            pour retrouver l’esprit portfolio haut de gamme.
+          </p>
+        </article>
+
+        <article class="section-card">
+          <div class="section-title">Contraintes respectées</div>
+          <h3>100% statique</h3>
+          <p>
+            Aucun appel externe, aucun JavaScript, aucune dépendance. Tout tient dans un seul fichier HTML,
+            avec le CSS embarqué dans la page.
+          </p>
+        </article>
+      </section>-->
+
+      <div class="gallery-header" id="Recents">
+        <h3>Projets récents</h3>
+        <span class="eyebrow">Contact</span>
+      </div>
+
+      <section class="gallery-grid" aria-label="Galerie de composition visuelle">
+        <a class="shot s1" href="PAGES/10X.html"><span>Dassault Falcon 10X</span></a>
+        <a class="shot s2"><span>Arena Tour Indochine</span></a>
+        <a class="shot s3"><span>Voix d'outre mer</span></a>
+        <a class="shot s4"><span>Défilé Willy Chavaria</span></a>
+        <a class="shot s5"><span>Zénith David Tao</span></a>
+      </section>
+
+
+      <section class="cta">
+        <div>
+          <strong>Découvrir toutes les projets</strong>
+          <span>Une sélection complète des productions audiovisuelles, captations et collaborations professionnelles auxquelles j'ai pu participer.</span>
+        </div>
+        <a class="button" href="Projets.html">Tout les projets</a>
+      </section>
+
+
+      <div class="projects-header" id="Clients">
+        <h3>Clients</h3>
+        <span class="eyebrow">Contact</span>
+      </div>
+
+      
+
+      <section class="projects-grid">
+        <article class="project-card">
+          <img class="project-bg" src="IMG/LOGO_TF1.png" alt="TF1" />
+          <div class="project-index"></div>
+          <div>
+            <h4>TF1</h4>
+          </div>
+        </article>
+
+        <article class="project-card">
+          <img class="project-bg" src="IMG/LOGO_FRANCETV.png" alt="FRANCE TV" />
+          <div class="project-index"></div>
+          <div>
+            <h4>France TV</h4>
+          </div>
+        </article>
+
+        <article class="project-card">
+          <img class="project-bg" src="IMG/LOGO_DASSAULT.png" alt="Dassault Aviation" />
+          <div class="project-index"></div>
+          <div>
+            <h4>Dassault Aviation</h4>
+          </div>
+        </article>
+
+        <article class="project-card">
+          <img class="project-bg" src="IMG/TF1.png" alt="TF1" />
+          <div class="project-index"></div>
+          <div>
+            <h4>TV Prod</h4>
+          </div>
+        </article>
+
+        <article class="project-card">
+          <img class="project-bg" src="IMG/TF1.png" alt="TF1" />
+          <div class="project-index"></div>
+          <div>
+            <h4>M6</h4>
+          </div>
+        </article>
+
+        <article class="project-card">
+          <img class="project-bg" src="IMG/TF1.png" alt="TF1" />
+          <div class="project-index"></div>
+          <div>
+            <h4>Canal+</h4>
+          </div>
+        </article>
+
+        <article class="project-card">
+          <img class="project-bg" src="IMG/TF1.png" alt="TF1" />
+          <div class="project-index"></div>
+          <div>
+            <h4>Focus Helix</h4>
+          </div>
+        </article>
+
+        <article class="project-card">
+          <img class="project-bg" src="IMG/TF1.png" alt="TF1" />
+          <div class="project-index"></div>
+          <div>
+            <h4>Bahrain TV</h4>
+          </div>
+        </article>
+
+        <article class="project-card">
+          <img class="project-bg" src="IMG/TF1.png" alt="TF1" />
+          <div class="project-index"></div>
+          <div>
+            <h4>AMP VISUAL TV</h4>
+          </div>
+        </article>
+
+        <article class="project-card">
+          <img class="project-bg" src="IMG/TF1.png" alt="TF1" />
+          <div class="project-index"></div>
+          <div>
+            <h4>KENEO</h4>
+          </div>
+        </article>
+      </section>
+
+      <a class="back-top" href="#top">↑ Retour en haut</a>
+    </main>
+  </div>
+</body>
+</html>

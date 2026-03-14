@@ -1,0 +1,713 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Projet — Arthur Tacheau</title>
+  <style>
+    :root {
+      --bg: #111111;
+      --panel: #171717;
+      --panel-2: #1f1f1f;
+      --text: #f5f1e8;
+      --muted: #b7afa3;
+      --line: rgba(245, 241, 232, 0.12);
+      --accent: #f5f1e8;
+      --shadow: 0 20px 50px rgba(0,0,0,.35);
+      --radius: 22px;
+      --max: 1320px;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      font-family: Inter, Arial, Helvetica, sans-serif;
+      background:
+        radial-gradient(circle at top left, rgba(255,255,255,.06), transparent 30%),
+        radial-gradient(circle at bottom right, rgba(255,255,255,.03), transparent 25%),
+        var(--bg);
+      color: var(--text);
+      line-height: 1.5;
+    }
+
+    a { color: inherit; text-decoration: none; }
+    img { max-width: 100%; display: block; }
+
+    .layout {
+      display: grid;
+      grid-template-columns: 260px 1fr;
+      min-height: 100vh;
+    }
+
+    .sidebar {
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      padding: 32px 26px;
+      border-right: 1px solid var(--line);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 24px;
+      background: rgba(12,12,12,.75);
+      backdrop-filter: blur(14px);
+    }
+
+    .brand {
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+
+    .brand-mark {
+      width: 128px;
+      height: 128px;
+      border: 1px solid var(--line);
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      font-weight: 600;
+      letter-spacing: .18em;
+      font-size: 0;
+      color: var(--muted);
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-image: url("../IMG/MOI.png");
+    }
+
+    .brand h1 {
+      margin: 0;
+      font-size: 24px;
+      line-height: 1;
+      font-weight: 500;
+      letter-spacing: -.04em;
+    }
+
+    .nav {
+      display: grid;
+      gap: 10px;
+      margin-top: 14px;
+    }
+
+    .nav a {
+      width: fit-content;
+      font-size: 14px;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      color: var(--muted);
+      transition: .2s ease;
+      position: relative;
+    }
+
+    .nav a::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: -4px;
+      width: 0;
+      height: 1px;
+      background: var(--accent);
+      transition: width .25s ease;
+    }
+
+    .nav a:hover,
+    .nav a.active { color: var(--text); }
+
+    .nav a:hover::after,
+    .nav a.active::after { width: 100%; }
+
+    .sidebar-footer {
+      display: grid;
+      gap: 10px;
+      font-size: 12px;
+      color: var(--muted);
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+
+    main {
+      width: min(calc(100% - 48px), var(--max));
+      margin: 0 auto;
+      padding: 34px 0 80px;
+    }
+
+    .project-hero {
+      display: grid;
+      grid-template-columns: 1.15fr .85fr;
+      gap: 24px;
+      margin-bottom: 24px;
+      align-items: stretch;
+    }
+
+    .hero-side {
+      display: grid;
+      grid-template-rows: auto auto;
+      gap: 24px;
+      height: 100%;
+    }
+
+    .hero-card,
+    .hero-visual,
+    .hero-actions,
+    .content-card,
+    .photo-card {
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.01));
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .hero-card {
+      padding: 42px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      height: 100%;
+      min-height: unset;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      width: fit-content;
+      padding: 8px 12px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: .16em;
+      font-size: 11px;
+    }
+
+    .hero-card h2 {
+      margin: 18px 0 14px;
+      font-size: clamp(38px, 5vw, 78px);
+      line-height: .94;
+      letter-spacing: -.06em;
+      text-transform: uppercase;
+    }
+
+    .hero-card p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 16px;
+      max-width: 760px;
+    }
+
+    .hero-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 28px;
+    }
+
+    .pill {
+      padding: 10px 14px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      font-size: 13px;
+      color: var(--text);
+      background: rgba(255,255,255,.02);
+    }
+
+    .hero-visual {
+      position: relative;
+      min-height: 260px;
+      aspect-ratio: 16 / 9;
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-image: url("../IMG/10X.png");
+    }
+
+    .hero-visual::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(to top, rgba(0,0,0,.55), rgba(0,0,0,.15), transparent 35%);
+    }
+
+    .hero-visual .overlay-text {
+      position: absolute;
+      left: 28px;
+      bottom: 28px;
+      font-size: clamp(24px, 3vw, 44px);
+      letter-spacing: -.05em;
+      line-height: .95;
+      text-transform: uppercase;
+      max-width: 320px;
+      text-shadow: 0 0 25px rgba(0,0,0,1);
+      z-index: 1;
+    }
+
+    .hero-actions {
+      padding: 28px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .hero-actions .cta-row {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-top: 0;
+    }
+
+    .hero-actions .button,
+    .hero-actions .button-ghost {
+      width: 100%;
+    }
+
+    .content-grid {
+      display: grid;
+      grid-template-columns: 1fr 380px;
+      gap: 24px;
+      margin-top: 24px;
+    }
+
+    .content-card {
+      padding: 30px;
+    }
+
+    .content-card + .content-card {
+      margin-top: 24px;
+    }
+
+    .section-title {
+      margin: 0 0 12px;
+      font-size: 13px;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .content-card h3 {
+      margin: 0 0 14px;
+      font-size: 30px;
+      letter-spacing: -.04em;
+    }
+
+    .content-card p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 15px;
+    }
+
+    .content-card p + p {
+      margin-top: 14px;
+    }
+
+    .info-list {
+      display: grid;
+      gap: 18px;
+    }
+
+    .info-item {
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .info-item:last-child {
+      border-bottom: none;
+      padding-bottom: 0;
+    }
+
+    .info-label {
+      display: block;
+      margin-bottom: 6px;
+      font-size: 11px;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .info-value {
+      font-size: 15px;
+      color: var(--text);
+    }
+
+    .role-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 16px;
+    }
+
+    .photo-section {
+      margin-top: 56px;
+    }
+
+    .photo-header {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 18px;
+      margin-bottom: 16px;
+    }
+
+    .photo-header h3 {
+      margin: 0;
+      font-size: clamp(28px, 3vw, 44px);
+      letter-spacing: -.05em;
+      text-transform: uppercase;
+    }
+
+    .photo-grid {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 24px;
+    }
+
+    .photo-card {
+      min-height: 260px;
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      position: relative;
+    }
+
+    .photo-card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(0,0,0,.45), transparent 45%);
+    }
+
+    .photo-card span {
+      position: absolute;
+      left: 18px;
+      bottom: 16px;
+      z-index: 1;
+      font-size: 14px;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: #fff;
+      padding: 4px 8px;
+      border-radius: 5px;
+      backdrop-filter: blur(4px);
+      background: rgba(30,30,30,0.30);
+      border: 1px solid rgba(255,255,255,0.20);
+    }
+
+    .p1 { grid-column: span 7; min-height: 380px; background-image: url("../IMG/10X.png"); }
+    .p2 { grid-column: span 5; min-height: 380px; background-image: url("../IMG/INDOCHINE.png"); }
+    .p3 { grid-column: span 4; min-height: 280px; background-image: url("../IMG/OUTRE-MER.png"); }
+    .p4 { grid-column: span 4; min-height: 280px; background-image: url("../IMG/WILLY-CHAVARIA.png"); }
+    .p5 { grid-column: span 4; min-height: 280px; background-image: url("../IMG/DAVID-TAO.png"); }
+
+    .button,
+    .button-ghost {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 14px 20px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      text-transform: uppercase;
+      letter-spacing: .16em;
+      font-size: 12px;
+      white-space: nowrap;
+      transition: .2s ease;
+    }
+
+    .button {
+      background: var(--text);
+      color: #111;
+    }
+
+    .button-ghost {
+      background: rgba(255,255,255,.02);
+      color: var(--text);
+    }
+
+    .button-ghost:hover,
+    .button:hover {
+      transform: translateY(-2px);
+    }
+
+    .cta-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 24px;
+    }
+
+    .back-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      margin-top: 56px;
+      padding: 24px 28px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.01));
+      box-shadow: var(--shadow);
+    }
+
+    .back-row strong {
+      display: block;
+      font-size: 22px;
+      letter-spacing: -.04em;
+      margin-bottom: 4px;
+    }
+
+    .back-row span {
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    @media (max-width: 1100px) {
+      .layout { grid-template-columns: 1fr; }
+
+      .sidebar {
+        position: relative;
+        height: auto;
+        border-right: none;
+        border-bottom: 1px solid var(--line);
+      }
+
+      main { width: min(calc(100% - 36px), var(--max)); }
+
+      .project-hero,
+      .content-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-side {
+        grid-template-rows: auto auto;
+      }
+
+      .photo-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .photo-grid > * {
+        grid-column: span 1 !important;
+        min-height: 240px !important;
+      }
+    }
+
+    @media (max-width: 700px) {
+      main {
+        width: min(calc(100% - 24px), var(--max));
+        padding-top: 22px;
+      }
+
+      .hero-visual {
+        min-height: 220px;
+        aspect-ratio: 16 / 9;
+      }
+
+      .hero-card,
+      .content-card,
+      .back-row,
+      .hero-actions {
+        padding: 22px;
+      }
+
+      .photo-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .back-row {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="layout">
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="brand-mark">AT</div>
+        <div>
+          <h1>Arthur Tacheau</h1>
+          <nav class="nav" aria-label="Navigation principale">
+            <a href="../index.html">Présentation</a>
+            <a href="../index.html#Recents">Projets récents</a>
+            <a href="../index.html#Projets" class="active">Tous les projets</a>
+            <a href="../index.html">Retour au site</a>
+          </nav>
+        </div>
+      </div>
+
+      <div class="sidebar-footer">
+        <a href="https://www.linkedin.com/in/arthurtacheau" target="_blank" rel="noopener noreferrer">Linkedin</a>
+        <a href="https://www.instagram.com/arthurtacheau" target="_blank" rel="noopener noreferrer">Instagram</a>
+      </div>
+    </aside>
+
+    <main>
+      <section class="project-hero">
+        <article class="hero-card">
+          <div>
+            <span class="eyebrow">Fiche projet</span>
+            <h2>Dassault<br>Falcon 10X</h2>
+            <p>
+              Projet corporate / aéronautique autour de la mise en valeur d’un univers
+              premium, technologique et visuellement maîtrisé.
+            </p>
+
+            <div class="hero-meta">
+              <span class="pill">Cadreur</span>
+              <span class="pill">Production</span>
+              <span class="pill">Corporate</span>
+            </div>
+          </div>
+
+          <div>
+            <p>
+              Cette page sert de template réutilisable pour chacun de mes projets.
+            </p>
+          </div>
+        </article>
+
+        <div class="hero-side">
+          <div class="hero-visual" aria-hidden="true">
+            <div class="overlay-text">Projet<br>Corporate</div>
+          </div>
+
+          <div class="hero-actions">
+            <div class="cta-row">
+              <a class="button" href="https://www.dassault-aviation.com/fr/" target="_blank" rel="noopener noreferrer">
+                Visiter le site du client
+              </a>
+              <a class="button-ghost" href="../index.html">
+                Retour au portfolio
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="content-grid">
+        <div>
+          <article class="content-card">
+            <div class="section-title">Contexte</div>
+            <h3>Le projet</h3>
+            <p>
+              Explique ici le contexte général : client, production, diffusion,
+              type de tournage, environnement technique, contraintes de temps,
+              enjeux visuels ou narratifs.
+            </p>
+            <p>
+              Par exemple : tournage dans un environnement premium, besoin d’une image
+              propre et élégante, coordination avec une équipe réduite, contraintes
+              de lumière ou de rythme de production.
+            </p>
+          </article>
+
+          <article class="content-card">
+            <div class="section-title">Description</div>
+            <h3>Approche visuelle et exécution</h3>
+            <p>
+              Décris ici ce qui a été produit concrètement : captation, images
+              d’ambiance, interviews, séquences produit, plans de détail, tournage
+              événementiel, making-of, post-production ou livraison finale.
+            </p>
+            <p>
+              Tu peux aussi détailler ton approche : sobriété, précision du cadre,
+              recherche d’une image premium, travail de composition, adaptation au
+              rythme du direct ou de la production.
+            </p>
+          </article>
+
+          <article class="content-card">
+            <div class="section-title">Mon rôle</div>
+            <h3>Intervention sur le projet</h3>
+            <p>
+              Présente ici précisément ta place dans la chaîne de production :
+              cadre, opérateur caméra, assistant, technicien vidéo, support HF,
+              gestion de workflow, post-production, coordination technique, etc.
+            </p>
+
+            <div class="role-tags">
+              <span class="pill">Cadre</span>
+              <span class="pill">Caméra</span>
+              <span class="pill">Image</span>
+              <span class="pill">Technique</span>
+            </div>
+          </article>
+        </div>
+
+        <aside>
+          <article class="content-card">
+            <div class="section-title">Informations</div>
+            <div class="info-list">
+              <div class="info-item">
+                <span class="info-label">Client</span>
+                <div class="info-value">Dassault Aviation</div>
+              </div>
+
+              <div class="info-item">
+                <span class="info-label">Type</span>
+                <div class="info-value">Corporate / Aéronautique</div>
+              </div>
+
+              <div class="info-item">
+                <span class="info-label">Date</span>
+                <div class="info-value">08 Mars 2026 - 11 Mars 2026</div>
+              </div>
+
+              <div class="info-item">
+                <span class="info-label">Rôle</span>
+                <div class="info-value">Responsable des liaisons vidéos</div>
+              </div>
+
+              <div class="info-item">
+                <span class="info-label">Lieu</span>
+                <div class="info-value">Bordeaux, France</div>
+              </div>
+            </div>
+          </article>
+
+          <article class="content-card">
+            <div class="section-title">Lien</div>
+            <h3>Ressource externe</h3>
+            <p>
+              Cette section est optionnelle. Tu peux la masquer totalement
+              si un projet n’a pas de lien public.
+            </p>
+
+            <div class="cta-row">
+              <a class="button-ghost" href="https://example.com" target="_blank" rel="noopener noreferrer">
+                Ouvrir le projet
+              </a>
+            </div>
+          </article>
+        </aside>
+      </section>
+
+      <section class="photo-section">
+        <div class="photo-header">
+          <h3>Galerie</h3>
+          <span class="eyebrow">Photos</span>
+        </div>
+
+        <div class="photo-grid">
+          <article class="photo-card p1"><span>Vue générale</span></article>
+          <article class="photo-card p2"><span>Backstage</span></article>
+          <article class="photo-card p3"><span>Détail</span></article>
+          <article class="photo-card p4"><span>Production</span></article>
+          <article class="photo-card p5"><span>Ambiance</span></article>
+        </div>
+      </section>
+
+      <section class="back-row">
+        <div>
+          <strong>Retour au portfolio principal</strong>
+          <span>Tu peux relier chaque page projet à ton site principal avec le menu ou ce bouton.</span>
+        </div>
+        <a class="button" href="../index.html">Retour au site</a>
+      </section>
+    </main>
+  </div>
+</body>
+</html>
