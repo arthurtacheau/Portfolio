@@ -848,7 +848,7 @@ width: min(calc(100% - 24px), var(--max));
 padding-top: 22px;
 }
 
-.hero-visual {
+.hero-visual-pages {
 min-height: 220px;
 aspect-ratio: 16 / 9;
 }
