@@ -4,6 +4,12 @@
   <title>Contact — Arthur Tacheau</title>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta property="og:title" content="Arthur Tacheau - CONTACT">
+  <meta property="og:description" content="Portfolio audiovisuel : TV, cinéma et événements live.">
+  <meta property="og:image" content="https://arthurtacheau.com/IMG/preview.avif">
+  <meta property="og:url" content="https://arthurtacheau.com">
+  <meta property="og:type" content="website">
+  
   <link rel="icon" type="image/png" href="IMG/favicon.png">
   <link rel="stylesheet" href="CSS/main.css">
 </head>
@@ -49,9 +55,17 @@
             Pour toute demande de prestation, collaboration ou échange professionnel.
           </p>
           <div class="cta-row">
-            <a class="button" href="mailto:arthur@example.com">MAIL</a>
-            <a class="button" href="mailto:arthur@example.com">TELEPHONE</a>
+            <a class="button" href="" onclick="copierMail()">Mail</a>
+            <a class="button" href="" onclick="copierTel()">Téléphone</a>
           </div>
+          <script>
+          function copierMail() {
+            navigator.clipboard.writeText("")
+          }
+          function copierTel() {
+            navigator.clipboard.writeText("")
+          }
+          </script>
         </article>
 
         <article class="section-card">
